@@ -1,23 +1,26 @@
-speakeasyVersion: 1.417.1
+speakeasyVersion: 1.418.1
 sources:
     sdk -OAS:
         sourceNamespace: pfm--oas
-        sourceRevisionDigest: sha256:5965ad2824b8cbeebb6e9e344889d570c885f29be8486027abc2ff3ddfe540c0
-        sourceBlobDigest: sha256:4119cd37997e0c8f1fd26d3e7621f539bdf08ce486cbad3fde6f62d98f932d2c
+        sourceRevisionDigest: sha256:b139a7c3dcf8097893fec5cc6639e5627c49c393c18878a0fa434dc14a7cde8a
+        sourceBlobDigest: sha256:c170f59c716155bfae5a0c8425293d84b2259a30e6af5b112455c658625d140e
         tags:
             - latest
+            - main
 targets:
     sdk:
         source: sdk -OAS
         sourceNamespace: pfm--oas
-        sourceRevisionDigest: sha256:5965ad2824b8cbeebb6e9e344889d570c885f29be8486027abc2ff3ddfe540c0
-        sourceBlobDigest: sha256:4119cd37997e0c8f1fd26d3e7621f539bdf08ce486cbad3fde6f62d98f932d2c
+        sourceRevisionDigest: sha256:b139a7c3dcf8097893fec5cc6639e5627c49c393c18878a0fa434dc14a7cde8a
+        sourceBlobDigest: sha256:c170f59c716155bfae5a0c8425293d84b2259a30e6af5b112455c658625d140e
 workflow:
     workflowVersion: 1.0.0
+    speakeasyVersion: latest
     sources:
         sdk -OAS:
             inputs:
-                - location: ..\pfm-apis.yaml
+                - location: https://raw.githubusercontent.com/MostafaGamal/sdk/refs/heads/master/pfm-apis.yaml
+            output: '  '
             registry:
                 location: registry.speakeasyapi.dev/fintech-galaxy/fintech-galaxy/pfm--oas
     targets:

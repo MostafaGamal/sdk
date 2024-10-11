@@ -72,10 +72,12 @@ func (c *sdkConfiguration) GetServerDetails() (string, map[string]string) {
 
 // Pfm - Personal Finance Management APIs: APIs for managing business finances, including accounts transaction aggregation, budgets, expenses, and reports.
 type Pfm struct {
+	// Endpoint related to access token generation
 	AccessToken *AccessToken
 	// Endpoints related to user management
 	Users *Users
-	Kyc   *Kyc
+	// Endpoints for Know Your Customer (KYC) verification
+	Kyc *Kyc
 	// Endpoints related to user connections with the banks
 	Connections *Connections
 	// Endpoints related to user accounts
@@ -162,9 +164,9 @@ func New(opts ...SDKOption) *Pfm {
 		sdkConfiguration: sdkConfiguration{
 			Language:          "go",
 			OpenAPIDocVersion: "0.0.0.1",
-			SDKVersion:        "0.1.0",
-			GenVersion:        "2.438.2",
-			UserAgent:         "speakeasy-sdk/go 0.1.0 2.438.2 0.0.0.1 github.com/MostafaGamal/sdk",
+			SDKVersion:        "0.2.0",
+			GenVersion:        "2.438.3",
+			UserAgent:         "speakeasy-sdk/go 0.2.0 2.438.3 0.0.0.1 github.com/MostafaGamal/sdk",
 			Hooks:             hooks.New(),
 		},
 	}

@@ -27,9 +27,9 @@ func newUsers(sdkConfig sdkConfiguration) *Users {
 	}
 }
 
-// Get - Endpoint to provides details about current logged in user
+// GetUserInfo - Endpoint to provides details about current logged in user
 // Provides details about current logged in user
-func (s *Users) Get(ctx context.Context, opts ...operations.Option) (*operations.GetUserInfoResponse, error) {
+func (s *Users) GetUserInfo(ctx context.Context, opts ...operations.Option) (*operations.GetUserInfoResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "get_user_info",

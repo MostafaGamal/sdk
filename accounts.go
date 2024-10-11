@@ -26,9 +26,9 @@ func newAccounts(sdkConfig sdkConfiguration) *Accounts {
 	}
 }
 
-// List - Get accounts
+// GetUserAccounts - Get accounts
 // Retrieve all the accounts associated with a particular connection.
-func (s *Accounts) List(ctx context.Context, connectionID int64, opts ...operations.Option) (*operations.GetUserAccountsResponse, error) {
+func (s *Accounts) GetUserAccounts(ctx context.Context, connectionID int64, opts ...operations.Option) (*operations.GetUserAccountsResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "get_user_accounts",
@@ -258,9 +258,9 @@ func (s *Accounts) List(ctx context.Context, connectionID int64, opts ...operati
 
 }
 
-// GetByID - Get account details
+// GetUserAccountByID - Get account details
 // Retrieve the details of a specific user account.
-func (s *Accounts) GetByID(ctx context.Context, accountID int64, connectionID int64, opts ...operations.Option) (*operations.GetUserAccountByIDResponse, error) {
+func (s *Accounts) GetUserAccountByID(ctx context.Context, accountID int64, connectionID int64, opts ...operations.Option) (*operations.GetUserAccountByIDResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "get_user_account_by_id",
@@ -493,9 +493,9 @@ func (s *Accounts) GetByID(ctx context.Context, accountID int64, connectionID in
 
 }
 
-// GetBalances - Get account balances
+// GetUserAccountBalances - Get account balances
 // Returns the account balance information for a particular account/connection.
-func (s *Accounts) GetBalances(ctx context.Context, request operations.GetUserAccountBalancesRequest, opts ...operations.Option) (*operations.GetUserAccountBalancesResponse, error) {
+func (s *Accounts) GetUserAccountBalances(ctx context.Context, request operations.GetUserAccountBalancesRequest, opts ...operations.Option) (*operations.GetUserAccountBalancesResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "get_user_account_balances",

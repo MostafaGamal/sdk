@@ -3,12 +3,14 @@
 
 ## Overview
 
+Endpoints for Know Your Customer (KYC) verification
+
 ### Available Operations
 
-* [Submit](#submit) - Submit KYC information
-* [GetStatus](#getstatus) - Get KYC verification status
+* [SubmitKyc](#submitkyc) - Submit KYC information
+* [GetKycStatus](#getkycstatus) - Get KYC verification status
 
-## Submit
+## SubmitKyc
 
 Submit customer information for KYC (Know Your Customer) verification.
 
@@ -30,7 +32,7 @@ func main() {
     )
 
     ctx := context.Background()
-    res, err := s.Kyc.Submit(ctx, components.KYCRequest{
+    res, err := s.Kyc.SubmitKyc(ctx, components.KYCRequest{
         ContactPerson: &components.ContactPerson{
             Email: sdk.String("john.doe@company.com"),
         },
@@ -64,7 +66,7 @@ func main() {
 | sdkerrors.Validation | 422                  | application/json     |
 | sdkerrors.SDKError   | 4XX, 5XX             | \*/\*                |
 
-## GetStatus
+## GetKycStatus
 
 Retrieve the status of KYC (Know Your Customer) verification.
 
@@ -85,7 +87,7 @@ func main() {
     )
 
     ctx := context.Background()
-    res, err := s.Kyc.GetStatus(ctx)
+    res, err := s.Kyc.GetKycStatus(ctx)
     if err != nil {
         log.Fatal(err)
     }

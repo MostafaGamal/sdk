@@ -27,21 +27,14 @@ func newTransactions(sdkConfig sdkConfiguration) *Transactions {
 	}
 }
 
-// ListForAccount - List transactions
+// GetAccountTransactions - List transactions
 // Retrieve a list of transactions for the authenticated user.
-func (s *Transactions) ListForAccount(ctx context.Context, connectionID int64, accountID int64, limit *int64, offset *string, opts ...operations.Option) (*operations.GetAccountTransactionsResponse, error) {
+func (s *Transactions) GetAccountTransactions(ctx context.Context, request operations.GetAccountTransactionsRequest, opts ...operations.Option) (*operations.GetAccountTransactionsResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "get_account_transactions",
 		OAuth2Scopes:   []string{},
 		SecuritySource: s.sdkConfiguration.Security,
-	}
-
-	request := operations.GetAccountTransactionsRequest{
-		Limit:        limit,
-		Offset:       offset,
-		ConnectionID: connectionID,
-		AccountID:    accountID,
 	}
 
 	o := operations.Options{}
@@ -266,9 +259,9 @@ func (s *Transactions) ListForAccount(ctx context.Context, connectionID int64, a
 
 }
 
-// List transactions
+// GetTransactions - List transactions
 // Retrieve a list of transactions for the authenticated user.
-func (s *Transactions) List(ctx context.Context, limit *int64, offset *string, opts ...operations.Option) (*operations.GetTransactionsResponse, error) {
+func (s *Transactions) GetTransactions(ctx context.Context, limit *int64, offset *string, opts ...operations.Option) (*operations.GetTransactionsResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "get_transactions",

@@ -7,11 +7,11 @@ Endpoints related to user accounts
 
 ### Available Operations
 
-* [List](#list) - Get accounts
-* [GetByID](#getbyid) - Get account details
-* [GetBalances](#getbalances) - Get account balances
+* [GetUserAccounts](#getuseraccounts) - Get accounts
+* [GetUserAccountByID](#getuseraccountbyid) - Get account details
+* [GetUserAccountBalances](#getuseraccountbalances) - Get account balances
 
-## List
+## GetUserAccounts
 
 Retrieve all the accounts associated with a particular connection.
 
@@ -32,7 +32,7 @@ func main() {
     )
 
     ctx := context.Background()
-    res, err := s.Accounts.List(ctx, 1)
+    res, err := s.Accounts.GetUserAccounts(ctx, 1)
     if err != nil {
         log.Fatal(err)
     }
@@ -62,7 +62,7 @@ func main() {
 | sdkerrors.Validation | 422                  | application/json     |
 | sdkerrors.SDKError   | 4XX, 5XX             | \*/\*                |
 
-## GetByID
+## GetUserAccountByID
 
 Retrieve the details of a specific user account.
 
@@ -83,7 +83,7 @@ func main() {
     )
 
     ctx := context.Background()
-    res, err := s.Accounts.GetByID(ctx, 1, 1)
+    res, err := s.Accounts.GetUserAccountByID(ctx, 1, 1)
     if err != nil {
         log.Fatal(err)
     }
@@ -114,7 +114,7 @@ func main() {
 | sdkerrors.Validation | 422                  | application/json     |
 | sdkerrors.SDKError   | 4XX, 5XX             | \*/\*                |
 
-## GetBalances
+## GetUserAccountBalances
 
 Returns the account balance information for a particular account/connection.
 
@@ -136,7 +136,7 @@ func main() {
     )
 
     ctx := context.Background()
-    res, err := s.Accounts.GetBalances(ctx, operations.GetUserAccountBalancesRequest{
+    res, err := s.Accounts.GetUserAccountBalances(ctx, operations.GetUserAccountBalancesRequest{
         ConnectionID: 1,
         AccountID: 1,
     })

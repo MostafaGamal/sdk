@@ -62,7 +62,7 @@ func main() {
 	s := sdk.New()
 
 	ctx := context.Background()
-	res, err := s.AccessToken.Create(ctx, &operations.GetAccessTokenRequestBody{
+	res, err := s.AccessToken.GetAccessToken(ctx, &operations.GetAccessTokenRequestBody{
 		ClientID:     "demo",
 		Code:         "42a7913c-62b4-40cc-a1aa-66286c56a7d5.9dacc7ad-6ca9-4f1b-badb-bbb55ec67323.b913eb22-9a40-464f-bc5a-0c17589214c2",
 		RedirectURI:  "https://localhost:8080",
@@ -87,19 +87,19 @@ func main() {
 
 ### [AccessToken](docs/sdks/accesstoken/README.md)
 
-* [Create](docs/sdks/accesstoken/README.md#create) - Get an Access Token
+* [GetAccessToken](docs/sdks/accesstoken/README.md#getaccesstoken) - Get an Access Token
 
 ### [Accounts](docs/sdks/accounts/README.md)
 
-* [List](docs/sdks/accounts/README.md#list) - Get accounts
-* [GetByID](docs/sdks/accounts/README.md#getbyid) - Get account details
-* [GetBalances](docs/sdks/accounts/README.md#getbalances) - Get account balances
+* [GetUserAccounts](docs/sdks/accounts/README.md#getuseraccounts) - Get accounts
+* [GetUserAccountByID](docs/sdks/accounts/README.md#getuseraccountbyid) - Get account details
+* [GetUserAccountBalances](docs/sdks/accounts/README.md#getuseraccountbalances) - Get account balances
 
 ### [Connections](docs/sdks/connections/README.md)
 
-* [List](docs/sdks/connections/README.md#list) - Get user's ais connections
-* [Create](docs/sdks/connections/README.md#create) - Create a new bank ais connection
-* [Delete](docs/sdks/connections/README.md#delete) - Delete Ais Connection by ID
+* [GetUserConnections](docs/sdks/connections/README.md#getuserconnections) - Get user's ais connections
+* [CreateAisConnection](docs/sdks/connections/README.md#createaisconnection) - Create a new bank ais connection
+* [DeleteAisConnection](docs/sdks/connections/README.md#deleteaisconnection) - Delete Ais Connection by ID
 
 ### [Helpdesk](docs/sdks/helpdesk/README.md)
 
@@ -107,18 +107,18 @@ func main() {
 
 ### [Kyc](docs/sdks/kyc/README.md)
 
-* [Submit](docs/sdks/kyc/README.md#submit) - Submit KYC information
-* [GetStatus](docs/sdks/kyc/README.md#getstatus) - Get KYC verification status
+* [SubmitKyc](docs/sdks/kyc/README.md#submitkyc) - Submit KYC information
+* [GetKycStatus](docs/sdks/kyc/README.md#getkycstatus) - Get KYC verification status
 
 
 ### [Transactions](docs/sdks/transactions/README.md)
 
-* [ListForAccount](docs/sdks/transactions/README.md#listforaccount) - List transactions
-* [List](docs/sdks/transactions/README.md#list) - List transactions
+* [GetAccountTransactions](docs/sdks/transactions/README.md#getaccounttransactions) - List transactions
+* [GetTransactions](docs/sdks/transactions/README.md#gettransactions) - List transactions
 
 ### [Users](docs/sdks/users/README.md)
 
-* [Get](docs/sdks/users/README.md#get) - Endpoint to provides details about current logged in user
+* [GetUserInfo](docs/sdks/users/README.md#getuserinfo) - Endpoint to provides details about current logged in user
 
 </details>
 <!-- End Available Resources and Operations [operations] -->
@@ -145,7 +145,7 @@ func main() {
 	s := sdk.New()
 
 	ctx := context.Background()
-	res, err := s.AccessToken.Create(ctx, &operations.GetAccessTokenRequestBody{
+	res, err := s.AccessToken.GetAccessToken(ctx, &operations.GetAccessTokenRequestBody{
 		ClientID:     "demo",
 		Code:         "42a7913c-62b4-40cc-a1aa-66286c56a7d5.9dacc7ad-6ca9-4f1b-badb-bbb55ec67323.b913eb22-9a40-464f-bc5a-0c17589214c2",
 		RedirectURI:  "https://localhost:8080",
@@ -199,7 +199,7 @@ func main() {
 	)
 
 	ctx := context.Background()
-	res, err := s.AccessToken.Create(ctx, &operations.GetAccessTokenRequestBody{
+	res, err := s.AccessToken.GetAccessToken(ctx, &operations.GetAccessTokenRequestBody{
 		ClientID:     "demo",
 		Code:         "42a7913c-62b4-40cc-a1aa-66286c56a7d5.9dacc7ad-6ca9-4f1b-badb-bbb55ec67323.b913eb22-9a40-464f-bc5a-0c17589214c2",
 		RedirectURI:  "https://localhost:8080",
@@ -223,7 +223,7 @@ Handling errors in this SDK should largely match your expectations. All operatio
 
 By Default, an API error will return `sdkerrors.SDKError`. When custom error responses are specified for an operation, the SDK may also return their associated error. You can refer to respective *Errors* tables in SDK docs for more details on possible error types for each operation.
 
-For example, the `Get` function may return the following errors:
+For example, the `GetUserInfo` function may return the following errors:
 
 | Error Type         | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
@@ -249,7 +249,7 @@ func main() {
 	)
 
 	ctx := context.Background()
-	res, err := s.Users.Get(ctx)
+	res, err := s.Users.GetUserInfo(ctx)
 	if err != nil {
 
 		var e *sdkerrors.Error
@@ -299,7 +299,7 @@ func main() {
 	)
 
 	ctx := context.Background()
-	res, err := s.AccessToken.Create(ctx, &operations.GetAccessTokenRequestBody{
+	res, err := s.AccessToken.GetAccessToken(ctx, &operations.GetAccessTokenRequestBody{
 		ClientID:     "demo",
 		Code:         "42a7913c-62b4-40cc-a1aa-66286c56a7d5.9dacc7ad-6ca9-4f1b-badb-bbb55ec67323.b913eb22-9a40-464f-bc5a-0c17589214c2",
 		RedirectURI:  "https://localhost:8080",
@@ -335,7 +335,7 @@ func main() {
 	)
 
 	ctx := context.Background()
-	res, err := s.AccessToken.Create(ctx, &operations.GetAccessTokenRequestBody{
+	res, err := s.AccessToken.GetAccessToken(ctx, &operations.GetAccessTokenRequestBody{
 		ClientID:     "demo",
 		Code:         "42a7913c-62b4-40cc-a1aa-66286c56a7d5.9dacc7ad-6ca9-4f1b-badb-bbb55ec67323.b913eb22-9a40-464f-bc5a-0c17589214c2",
 		RedirectURI:  "https://localhost:8080",
@@ -368,7 +368,7 @@ func main() {
 	s := sdk.New()
 
 	ctx := context.Background()
-	res, err := s.AccessToken.Create(ctx, &operations.GetAccessTokenRequestBody{
+	res, err := s.AccessToken.GetAccessToken(ctx, &operations.GetAccessTokenRequestBody{
 		ClientID:     "demo",
 		Code:         "42a7913c-62b4-40cc-a1aa-66286c56a7d5.9dacc7ad-6ca9-4f1b-badb-bbb55ec67323.b913eb22-9a40-464f-bc5a-0c17589214c2",
 		RedirectURI:  "https://localhost:8080",
@@ -442,7 +442,7 @@ func main() {
 	)
 
 	ctx := context.Background()
-	res, err := s.AccessToken.Create(ctx, &operations.GetAccessTokenRequestBody{
+	res, err := s.AccessToken.GetAccessToken(ctx, &operations.GetAccessTokenRequestBody{
 		ClientID:     "demo",
 		Code:         "42a7913c-62b4-40cc-a1aa-66286c56a7d5.9dacc7ad-6ca9-4f1b-badb-bbb55ec67323.b913eb22-9a40-464f-bc5a-0c17589214c2",
 		RedirectURI:  "https://localhost:8080",

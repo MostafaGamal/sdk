@@ -1,12 +1,12 @@
 workflowVersion: 1.0.0
 sources:
-    pfm -OAS:
+    sdk -OAS:
         inputs:
-            - location: 'https://raw.githubusercontent.com/MostafaGamal/sdk/refs/heads/master/pfm-apis.yaml '
+            - location: https://raw.githubusercontent.com/MostafaGamal/sdk/refs/heads/master/pfm-apis.yaml
         output: '  '
         registry:
-            location: registry.speakeasyapi.dev/fintech-galaxy/fintech-galaxy/pfm--oas
+            location: registry.speakeasyapi.dev/fintech-galaxy/fintech-galaxy/sdk--oas
 targets:
-    pfm:
+    sdk:
         target: go
-        source: pfm -OAS
+        source: sdk -OAS

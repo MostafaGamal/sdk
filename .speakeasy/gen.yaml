@@ -30,7 +30,7 @@ go:
       shared: models/components
       webhooks: models/webhooks
   inputModelSuffix: input
-  maxMethodParams: 4
+  maxMethodParams: 3
   methodArguments: require-security-and-request
   outputModelSuffix: output
   packageName: github.com/MostafaGamal/sdk

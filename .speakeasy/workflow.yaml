@@ -2,10 +2,8 @@ workflowVersion: 1.0.0
 sources:
     pfm -OAS:
         inputs:
-            - location: https://raw.githubusercontent.com/MostafaGamal/sdk/refs/heads/master/pfm-apis.yaml
-        overlays:
-            - location: .speakeasy\speakeasy-modifications-overlay.yaml
-        output: ' '
+            - location: 'https://raw.githubusercontent.com/MostafaGamal/sdk/refs/heads/master/pfm-apis.yaml '
+        output: '  '
         registry:
             location: registry.speakeasyapi.dev/fintech-galaxy/fintech-galaxy/pfm--oas
 targets:

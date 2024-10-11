@@ -18,8 +18,6 @@ workflow:
         pfm -OAS:
             inputs:
                 - location: ..\pfm-apis.yaml
-            overlays:
-                - location: .speakeasy\speakeasy-modifications-overlay.yaml
             registry:
                 location: registry.speakeasyapi.dev/fintech-galaxy/fintech-galaxy/pfm--oas
     targets:

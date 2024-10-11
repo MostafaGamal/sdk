@@ -1,12 +1,14 @@
 lockVersion: 2.0.0
 id: 0279d87c-42eb-43d2-ab89-50b9d91c0764
 management:
-  docChecksum: 295fc49d62d8a6e781fb15618f26669d
+  docChecksum: 451d3c339bf892ae8df7b704b6aada9d
   docVersion: 0.0.0.1
-  speakeasyVersion: 1.417.1
-  generationVersion: 2.438.2
-  releaseVersion: 0.1.0
-  configChecksum: 7b267de52860e9755ad5c28b586ef485
+  speakeasyVersion: 1.418.1
+  generationVersion: 2.438.3
+  releaseVersion: 0.2.0
+  configChecksum: 274fa83b992e80b86f1d266672bff38c
+  repoURL: https://github.com/MostafaGamal/sdk.git
+  installationURL: https://github.com/MostafaGamal/sdk
 features:
   go:
     additionalDependencies: 0.1.0
@@ -20,10 +22,8 @@ features:
     globalSecurityCallbacks: 0.1.0
     globalSecurityFlattening: 0.1.0
     globalServerURLs: 2.82.2
-    groups: 2.81.2
     intellisenseMarkdownSupport: 0.1.0
     methodServerURLs: 2.82.1
-    nameOverrides: 2.81.2
     nullables: 0.1.0
     responseFormat: 0.1.2
     retries: 2.83.0

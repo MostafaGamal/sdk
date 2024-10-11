@@ -27,21 +27,14 @@ func newConnections(sdkConfig sdkConfiguration) *Connections {
 	}
 }
 
-// List - Get user's ais connections
+// GetUserConnections - Get user's ais connections
 // Retrieve the list of user ais connections.
-func (s *Connections) List(ctx context.Context, limit *int64, offset *string, sort *string, filter *string, opts ...operations.Option) (*operations.GetUserConnectionsResponse, error) {
+func (s *Connections) GetUserConnections(ctx context.Context, request operations.GetUserConnectionsRequest, opts ...operations.Option) (*operations.GetUserConnectionsResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "get_user_connections",
 		OAuth2Scopes:   []string{},
 		SecuritySource: s.sdkConfiguration.Security,
-	}
-
-	request := operations.GetUserConnectionsRequest{
-		Limit:  limit,
-		Offset: offset,
-		Sort:   sort,
-		Filter: filter,
 	}
 
 	o := operations.Options{}
@@ -247,9 +240,9 @@ func (s *Connections) List(ctx context.Context, limit *int64, offset *string, so
 
 }
 
-// Create a new bank ais connection
+// CreateAisConnection - Create a new bank ais connection
 // Create a new user bank ais connection (account).
-func (s *Connections) Create(ctx context.Context, request components.CreateAisConnection, opts ...operations.Option) (*operations.CreateAisConnectionResponse, error) {
+func (s *Connections) CreateAisConnection(ctx context.Context, request components.CreateAisConnection, opts ...operations.Option) (*operations.CreateAisConnectionResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "create_ais_connection",
@@ -483,9 +476,9 @@ func (s *Connections) Create(ctx context.Context, request components.CreateAisCo
 
 }
 
+// DeleteAisConnection - Delete Ais Connection by ID
 // Delete Ais Connection by ID
-// Delete Ais Connection by ID
-func (s *Connections) Delete(ctx context.Context, connectionID int64, opts ...operations.Option) (*operations.DeleteAisConnectionResponse, error) {
+func (s *Connections) DeleteAisConnection(ctx context.Context, connectionID int64, opts ...operations.Option) (*operations.DeleteAisConnectionResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "delete_ais_connection",

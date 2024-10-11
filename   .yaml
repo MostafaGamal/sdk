@@ -1,0 +1,1337 @@
+openapi: 3.0.0
+
+info:
+  title: Personal Finance Management APIs
+  description: APIs for managing business finances, including accounts transaction aggregation, budgets, expenses, and reports.
+  version: 0.0.0.1
+
+servers:
+  - url: https://pfm.thefinx.io/api/v1
+    description: The production API server
+  - url: https://pfm.thefinxdev.io/api/v1
+    description: The development API server
+
+security:
+  - openId: []
+
+tags:
+  - name: Access Token
+    description: Endpoint related to access token generation
+  - name: Users
+    description: Endpoints related to user management
+  - name: KYC
+    description: Endpoints for Know Your Customer (KYC) verification
+  - name: Connections
+    description: Endpoints related to user connections with the banks
+  - name: Accounts
+    description: Endpoints related to user accounts
+  - name: Transactions
+    description: Endpoints for managing financial transactions
+  - name: Helpdesk
+    description: Endpoint for inquires.
+
+paths:
+  /realms/pfm/protocol/openid-connect/token:
+    post:
+      tags:
+        - Access Token
+      summary: Get an Access Token
+      description: Get an access token from auth server to authenticate your requests to FINX PFM APIs.
+      operationId: get_access_token
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+                - client_id
+                - grant_type
+                - code
+                - redirect_uri
+                - code_verifier
+              properties:
+                client_id:
+                  description: Your SPA Client ID.
+                  type: string
+                  example: demo
+                  nullable: false
+                grant_type:
+                  description: The `grant_type` parameter must be set to `authorization_code`.
+                  type: string
+                  default: authorization_code
+                  nullable: false
+                code:
+                  description: Your authorization code.
+                  type: string
+                  example: 42a7913c-62b4-40cc-a1aa-66286c56a7d5.9dacc7ad-6ca9-4f1b-badb-bbb55ec67323.b913eb22-9a40-464f-bc5a-0c17589214c2
+                  nullable: false
+                redirect_uri:
+                  description: Your SPA URL.
+                  type: string
+                  example: https://localhost:8080
+                  nullable: false
+                code_verifier:
+                  description: Your code verifier which used to generate the code challenge in authorization request.
+                  type: string
+                  example: ZefY3-yNqKev8BbgtuudLnGRInI70uSt3-s5rr7x5Cc
+                  nullable: false
+      responses:
+        201:
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  access_token:
+                    description: Access Token to be used in requests to FINX PFM APIs.
+                    type: string
+                    example: eyJhbGciOiJIUzI1.SflKxwRJSMeKKF2QT4fwpMeJf36P.Ok6yJV_adQssw5c
+                    nullable: false
+                  scope:
+                    description: Application scopes on requested API, separated by spaces.
+                    type: string
+                    example: ais
+                    nullable: false
+                  expires_in:
+                    description: Number of seconds after which an Access Token will expire.
+                    type: integer
+                    example: 86400
+                    nullable: false
+                  token_type:
+                    description: Your Access Token type.
+                    type: string
+                    example: Bearer
+                    nullable: false
+      security:
+        - {}
+      servers:
+        - url: https://auth.thefinxdev.io
+          description: Development Auth Server
+        - url: https://auth.thefinx.io
+          description: Production Auth Server
+  #TODO: TBD, Do we really need that endpoint ?
+  /me:
+    get:
+      tags:
+        - Users
+      summary: Endpoint to provides details about current logged in user
+      description: Provides details about current logged in user
+      operationId: get_user_info
+      responses:
+        200:
+          $ref: '#/components/responses/UserDetails'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        500:
+          $ref: '#/components/responses/InternalServer'
+      security:
+        - openId: []
+  #TODO: To be checked
+  /kyc:
+    post:
+      tags:
+        - KYC
+      summary: Submit KYC information
+      description: Submit customer information for KYC (Know Your Customer) verification.
+      operationId: submit_kyc
+      requestBody:
+        $ref: '#/components/requestBodies/KYCRequest'
+      responses:
+        201:
+          description: KYC information submitted successfully
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        403:
+          $ref: '#/components/responses/Forbidden'
+        422:
+          $ref: '#/components/responses/Validation'
+        500:
+          $ref: '#/components/responses/InternalServer'
+      security:
+        - openId: []
+    get:
+      tags:
+        - KYC
+      summary: Get KYC verification status
+      description: Retrieve the status of KYC (Know Your Customer) verification.
+      operationId: get_kyc_status
+      responses:
+        200:
+          $ref: '#/components/responses/KYCStatus'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        403:
+          $ref: '#/components/responses/Forbidden'
+        500:
+          $ref: '#/components/responses/InternalServer'
+      security:
+        - openId: []
+  /ais/users/connections:
+    get:
+      tags:
+        - Connections
+      summary: Get user's ais connections
+      description: Retrieve the list of user ais connections.
+      operationId: get_user_connections
+      parameters:
+        - $ref: '#/components/parameters/Limit'
+        - $ref: '#/components/parameters/Cursor'
+        - $ref: '#/components/parameters/Sort'
+        - $ref: '#/components/parameters/Filter'
+      responses:
+        200:
+          $ref: '#/components/responses/AisConnectionsResponse'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        500:
+          $ref: '#/components/responses/InternalServer'
+      security:
+        - openId: [ ]
+    post:
+      tags:
+        - Connections
+      summary: Create a new bank ais connection
+      description: Create a new user bank ais connection (account).
+      operationId: create_ais_connection
+      requestBody:
+        $ref: '#/components/requestBodies/CreateAisConnectionRequest'
+      responses:
+        201:
+          $ref: '#/components/responses/AisConnectionResponse'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        422:
+          $ref: '#/components/responses/Validation'
+        500:
+          $ref: '#/components/responses/InternalServer'
+      security:
+        - openId: []
+  /ais/users/connections/{connection_id}:
+    delete:
+      tags:
+        - Connections
+      summary: Delete Ais Connection by ID
+      description: Delete Ais Connection by ID
+      operationId: delete_ais_connection
+      parameters:
+        - name: connection_id
+          in: path
+          description: The `id` of the connection for which will be deleted.
+          required: true
+          schema:
+            type: integer
+          example: 1
+      responses:
+        204:
+          $ref: '#/components/responses/NoContent'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+        422:
+          $ref: '#/components/responses/Validation'
+        500:
+          $ref: '#/components/responses/InternalServer'
+      security:
+        - openId: []
+  /ais/users/connections/{connection_id}/accounts:
+    get:
+      tags:
+        - Accounts
+      summary: Get accounts
+      description: Retrieve all the accounts associated with a particular connection.
+      operationId: get_user_accounts
+      parameters:
+        - $ref: '#/components/parameters/ConnectionID'
+      responses:
+        200:
+          $ref: '#/components/responses/AccountsResponse'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        422:
+          $ref: '#/components/responses/Validation'
+        500:
+          $ref: '#/components/responses/InternalServer'
+  /ais/users/connections/{connection_id}/accounts/{account_id}:
+    get:
+      tags:
+        - Accounts
+      summary: Get account details
+      description: Retrieve the details of a specific user account.
+      operationId: get_user_account_by_id
+      parameters:
+        - $ref: '#/components/parameters/AccountID'
+        - $ref: '#/components/parameters/ConnectionID'
+      responses:
+        200:
+          $ref: '#/components/responses/AccountDetailsResponse'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+        422:
+          $ref: '#/components/responses/Validation'
+        500:
+          $ref: '#/components/responses/InternalServer'
+  /ais/users/connections/{connection_id}/accounts/{account_id}/balances:
+    get:
+      tags:
+        - Accounts
+      summary: Get account balances
+      description: Returns the account balance information for a particular account/connection.
+      operationId: get_user_account_balances
+      parameters:
+        - $ref: '#/components/parameters/Limit'
+        - $ref: '#/components/parameters/Cursor'
+        - $ref: '#/components/parameters/Sort'
+        - $ref: '#/components/parameters/Filter'
+        - $ref: '#/components/parameters/ConnectionID'
+        - $ref: '#/components/parameters/AccountID'
+      responses:
+        200:
+          $ref: '#/components/responses/AccountBalancesResponse'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        422:
+          $ref: '#/components/responses/Validation'
+        500:
+          $ref: '#/components/responses/InternalServer'
+  /ais/users/connections/{connection_id}/accounts/{account_id}/transactions:
+    get:
+      tags:
+        - Transactions
+      summary: List transactions
+      description: Retrieve a list of transactions for the authenticated user.
+      operationId: get_account_transactions
+      parameters:
+        - $ref: '#/components/parameters/Limit'
+        - $ref: '#/components/parameters/Cursor'
+        - $ref: '#/components/parameters/ConnectionID'
+        - $ref: '#/components/parameters/AccountID'
+      responses:
+        200:
+          $ref: '#/components/responses/TransactionsResponse'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        422:
+          $ref: '#/components/responses/Validation'
+        500:
+          $ref: '#/components/responses/InternalServer'
+  /ais/users/connections/accounts/transactions:
+    get:
+      tags:
+        - Transactions
+      summary: List transactions
+      description: Retrieve a list of transactions for the authenticated user.
+      operationId: get_transactions
+      parameters:
+        - $ref: '#/components/parameters/Limit'
+        - $ref: '#/components/parameters/Cursor'
+      responses:
+        200:
+          $ref: '#/components/responses/TransactionsResponse'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        422:
+          $ref: '#/components/responses/Validation'
+        500:
+          $ref: '#/components/responses/InternalServer'
+  /helpdesk:
+    post:
+      tags:
+        - Helpdesk
+      summary: Create Helpdesk Ticket
+      description: Create new helpdesk ticket.
+      operationId: create_inquiry
+      requestBody:
+        $ref: '#/components/requestBodies/CreateHelpDeskTicketRequest'
+      responses:
+        204:
+          $ref: '#/components/responses/NoContent'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        422:
+          $ref: '#/components/responses/Validation'
+        500:
+          $ref: '#/components/responses/InternalServer'
+
+components:
+  #TODO: To be checked
+  securitySchemes:
+    openId:
+      type: openIdConnect
+      openIdConnectUrl: https://example.com/.well-known/openid-configuration
+
+  parameters:
+    ConnectionID:
+      in: path
+      name: connection_id
+      required: true
+      schema:
+        type: integer
+      example: 1
+    AccountID:
+      in: path
+      name: account_id
+      description: The `id` of the account for which to retrieve the account balance information.
+      required: true
+      schema:
+        type: integer
+      example: 1
+    UserID:
+      in: path
+      name: user_id
+      description: The `id` of the user whose connections you want to retrieve.
+      required: true
+      schema:
+        type: integer
+      example: 1
+    Limit:
+      in: query
+      name: limit
+      required: false
+      schema:
+        type: integer
+        default: 10
+    Cursor:
+      in: query
+      name: offset
+      required: false
+      schema:
+        type: string
+    Sort:
+      in: query
+      name: sort
+      description: Key to Sort by followed by order (- for descending)
+      required: false
+      schema:
+        type: string
+      style: form
+    Filter:
+      in: query
+      name: filter
+      description: Filter by resources having fields starting with this parameter value
+      required: false
+      schema:
+        type: string
+
+  schemas:
+    ID:
+      type: integer
+      format: int64
+      example: 1
+      x-oapi-codegen-extra-tags:
+        validate: number
+    Email:
+      type: string
+      format: email
+      maxLength: 100
+      minLength: 1
+      example: john.doe@company.com
+      x-oapi-codegen-extra-tags:
+        validate: required,email
+    CreateNewUser:
+      type: object
+      required:
+        - email
+      properties:
+        email:
+          $ref: '#/components/schemas/Email'
+    UserCreationResponse:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/ID'
+        email:
+          $ref: '#/components/schemas/Email'
+        status:
+          description: The status of the user.
+          type: string
+          enum:
+            - not_verified
+            - active
+            - blocked
+        created_at:
+          description: The timestamp when the user was created, in RFC 3339 format.
+          type: string
+          format: date-time
+          externalDocs:
+            description: RFC 3339 format
+            url: https://www.rfc-editor.org/rfc/rfc3339
+          example: '2020-01-26T02:25:34.569+00:00'
+          nullable: false
+        updated_at:
+          description: The timestamp when the user was last updated, in RFC 3339 format.
+          type: string
+          format: date-time
+          externalDocs:
+            description: RFC 3339 format
+            url: https://www.rfc-editor.org/rfc/rfc3339
+          example: '2020-01-26T02:25:34.569+00:00'
+          nullable: false
+        blocked_at:
+          description: The timestamp when the user was blocked, in RFC 3339 format.
+          type: string
+          format: date-time
+          externalDocs:
+            description: RFC 3339 format
+            url: https://www.rfc-editor.org/rfc/rfc3339
+          example: '2020-01-26T02:25:34.569+00:00'
+          nullable: true
+    UserDetails:
+      type: object
+      required:
+        - id
+        - email
+        - name
+        - is_admin
+      properties:
+        id:
+          $ref: '#/components/schemas/ID'
+        email:
+          $ref: '#/components/schemas/Email'
+        name:
+          type: string
+          minLength: 1
+          maxLength: 100
+        is_admin:
+          type: boolean
+    KYCRequest:
+      type: object
+      properties:
+        businessName:
+          type: string
+        businessAddress:
+          type: string
+        businessRegistrationNumber:
+          type: string
+        businessType:
+          type: string
+          enum:
+            - sole_proprietorship
+            - partnership
+            - corporation
+            - llc
+        contactPerson:
+          type: object
+          properties:
+            name:
+              type: string
+            email:
+              $ref: '#/components/schemas/Email'
+            phone:
+              type: string
+              pattern: ^\+[1-9]\d{6,14}$
+    KYCStatus:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+            - pending
+            - approved
+            - rejected
+        submissionDate:
+          type: string
+          format: date-time
+        verificationDate:
+          type: string
+          format: date-time
+        comments:
+          type: string
+    CreateAisConnection:
+      type: object
+      properties:
+        consentDetails:
+          type: object
+          required:
+            - start_date
+            - expires_at
+            - scopes
+          properties:
+            fetch_start_date:
+              description: The start date from which you wish to fetch data for a particular account.
+              type: string
+              format: date
+              example: '2020-01-26'
+              nullable: false
+            expires_at:
+              description: The date and time of consent expiration.
+              type: string
+              format: date-time
+              externalDocs:
+                description: RFC 3339 format
+                url: https://www.rfc-editor.org/rfc/rfc3339
+              example: '2024-01-26T02:25:34.569+00:00'
+              nullable: false
+            scopes:
+              description: The types of data that are allowed to be fetched.
+              type: array
+              items:
+                type: string
+                enum:
+                  - accounts
+                  - balances
+                  - transactions
+                  - beneficiaries
+                  - direct_debits
+                  - parties
+                  - scheduled_payments
+                  - standing_orders
+        language:
+          type: string
+          enum:
+            - ar
+            - en
+          nullable: true
+        use_case:
+          type: string
+          enum:
+            - account_aggregation
+            - personal_finance_management
+            - extended_customer_attributes
+            - e_statement
+            - credit_risk_assessment
+            - sme_tax_filing
+            - enterprise_financial_management
+          nullable: false
+    NewAisConnectionResponse:
+      type: object
+      properties:
+        auth_session_url:
+          description: '`auth_session_url` to be used to access FINX Connect Widget for connection creation.'
+          type: string
+          format: uri
+          maxLength: 2000
+          minLength: 1
+          example: https://www.fintech-galaxy.com/
+          nullable: false
+        expires_at:
+          description: The date and time when `auth_session_url` expires.
+          type: string
+          format: date-time
+          externalDocs:
+            description: RFC 3339 format
+            url: https://www.rfc-editor.org/rfc/rfc3339
+          example: '2020-01-26T02:25:34.569+00:00'
+          nullable: false
+    AisConnections:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            description: The `id` of the account.
+            type: integer
+            format: int64
+            example: 1
+          last_ais_consent_id:
+            description: The `id` of the last user's provided ais consent.
+            type: integer
+            format: int64
+            example: 1
+          bank_id:
+            description: The `id` of the bank that the account is associated with.
+            type: integer
+            format: int64
+            example: 1
+          is_active:
+            description: Whether the account is active or not.
+            type: boolean
+          is_refreshable:
+            description: Whether the account is refreshable or not.
+            type: boolean
+          created_at:
+            description: The timestamp when the account was created, in RFC 3339 format.
+            type: string
+            format: date-time
+            externalDocs:
+              description: RFC 3339 format
+              url: https://www.rfc-editor.org/rfc/rfc3339
+            example: '2020-01-26T02:25:34.569+00:00'
+            nullable: false
+          updated_at:
+            description: The timestamp when the account was last updated, in RFC 3339 format.
+            type: string
+            format: date-time
+            externalDocs:
+              description: RFC 3339 format
+              url: https://www.rfc-editor.org/rfc/rfc3339
+            example: '2020-01-26T02:25:34.569+00:00'
+            nullable: false
+    Account:
+      type: object
+      properties:
+        id:
+          description: The `id` of the account.
+          type: integer
+          format: int64
+          example: 1
+        connection_id:
+          description: The `id` of the connection to which the account is associated.
+          type: integer
+          format: int64
+          example: 1
+        currency_code:
+          description: The code of the currency in <a href='https://en.wikipedia.org/wiki/ISO_4217'
+            target='_blank'>ISO 4217</a> format.
+          type: string
+          maxLength: 3
+          minLength: 3
+          externalDocs:
+            description: ISO 4217 format
+            url: https://en.wikipedia.org/wiki/ISO_4217
+          example: AED
+        name:
+          description: The unique name of the account.
+          type: string
+          maxLength: 100
+          minLength: 1
+        balance:
+          description: The current balance of the account.
+          type: number
+          format: float
+        is_partial:
+          description: Whether the account's data was imported fully or partially. The
+            account's data may be imported partially due to some internal error on the
+            institution's side.
+          type: boolean
+        optional:
+          type: object
+          description: Optional data associated with the account.<br /><br /><strong>Note:</strong>
+            `optional` parameter will always be present, but the array may be empty, or
+            it may contain all or some of the parameters listed below.
+          properties:
+            iban:
+              description: International Bank Account Number.
+              type: string
+            bban:
+              description: Basic Bank Account Number.
+              type: string
+            sort_code:
+              description: Sorting/routing code.
+              type: string
+            swift_code:
+              description: Institution's SWIFT code.
+              type: string
+            status:
+              description: Status of the account.
+              type: string
+              enum:
+                - active
+                - inactive
+            balance_type:
+              description: Type of the balance.
+              type: string
+            account_type:
+              description: Type of the account.
+              type: string
+              enum:
+                - account
+                - bonus
+                - card
+                - checking
+                - credit
+                - credit_card
+                - debit_card
+                - ewallet
+                - insurance
+                - investment
+                - loan
+                - mortgage
+                - savings
+            card_type:
+              description: Type of the card account.
+              type: string
+              enum:
+                - american_express
+                - china_unionpay
+                - diners_club
+                - jcb
+                - maestro
+                - master_card
+                - uatp
+                - visa
+                - mir
+            card_numbers:
+              description: Payment card numbers.
+              type: array
+              items:
+                type: string
+            source_name:
+              description: Account name assigned by the bank.
+              type: string
+            source_date:
+              description: The last date when the bank updated the account/balance.
+              type: string
+              format: date
+            source_time:
+              description: The last time when the bank updated the account/balance.
+              type: string
+              format: time
+            source_account_number:
+              description: Account number assigned by the bank.
+              type: string
+            available_amount:
+              description: The available amount of funds in the account's currency.
+              type: number
+              format: float
+            blocked_amount:
+              description: The blocked amount of funds in the account's currency.
+              type: number
+              format: float
+            credit_limit:
+              description: The maximum amount of funds that the user can spend.
+              type: number
+              format: float
+            closing_balance:
+              description: Closing balance.
+              type: number
+              format: float
+            opening_balance:
+              description: Opening balance.
+              type: number
+              format: float
+            client_name:
+              description: User's name.
+              type: array
+              items:
+                type: string
+            open_date:
+              description: The date when the account/card was opened.
+              type: string
+              format: date
+            expiry_date:
+              description: Card's expiration date.
+              type: string
+              format: date
+        created_at:
+          description: The timestamp when the account's data was fetched for the first time, in RFC 3339 format.
+          type: string
+          format: date-time
+          externalDocs:
+            description: RFC 3339 format
+            url: https://www.rfc-editor.org/rfc/rfc3339
+          example: '2020-01-26T02:25:34.569+00:00'
+          nullable: false
+        updated_at:
+          description: The timestamp when the account's data was last updated, in RFC 3339 format.
+          type: string
+          format: date-time
+          externalDocs:
+            description: RFC 3339 format
+            url: https://www.rfc-editor.org/rfc/rfc3339
+          example: '2020-01-26T02:25:34.569+00:00'
+          nullable: false
+    AccountBalance:
+      type: object
+      properties:
+        account_id:
+          $ref: '#/components/schemas/ID'
+        connection_id:
+          $ref: '#/components/schemas/ID'
+        currency_code:
+          description: The code of the currency in <a href='https://en.wikipedia.org/wiki/ISO_4217' target='_blank'>ISO 4217</a> format.
+          type: string
+          maxLength: 3
+          minLength: 3
+          externalDocs:
+            description: ISO 4217 format
+            url: https://en.wikipedia.org/wiki/ISO_4217
+          example: AED
+        balance:
+          description: The current balance of the account/connection.
+          type: number
+          format: float
+        optional:
+          type: object
+          description: Optional data associated with the balance.<br /><br /><strong>Note:</strong>
+            `optional` parameter will always be present, but the array may be empty, or
+            it may contain all or some of the parameters listed below.
+          properties:
+            balance_type:
+              description: Type of the balance.
+              type: string
+            source_date:
+              description: The last date when the bank updated the balance.
+              type: string
+              format: date
+            source_time:
+              description: The last time when the bank updated the balance.
+              type: string
+              format: time
+            available_amount:
+              description: The available amount of funds in the account's currency.
+              type: number
+              format: float
+            blocked_amount:
+              description: The blocked amount of funds in the account's currency.
+              type: number
+              format: float
+            credit_limit:
+              description: The maximum amount of funds that the user can spend.
+              type: number
+              format: float
+            closing_balance:
+              description: Closing balance.
+              type: number
+              format: float
+            opening_balance:
+              description: Opening balance.
+              type: number
+              format: float
+    Transaction:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/ID'
+        connection_id:
+          $ref: '#/components/schemas/ID'
+        account_id:
+          $ref: '#/components/schemas/ID'
+        attempt_id:
+          $ref: '#/components/schemas/ID'
+        currency_code:
+          description: Transaction's currency code.
+          type: string
+          maxLength: 3
+          minLength: 3
+        description:
+          description: Transaction's description.
+          type: string
+          maxLength: 200
+          minLength: 1
+        amount:
+          description: Transaction's amount.<br /><br /><strong>Note:</strong> Negative
+            amounts refer to debit transactions, while positive - to credit transactions.
+          type: number
+          format: float
+        made_on:
+          description: The date when the transaction was made.
+          type: string
+          format: date
+        is_duplicated:
+          description: Whether the transaction is duplicated or not.
+          type: boolean
+        optional:
+          type: object
+          description: Optional data associated with the transaction.<br /><br /><strong>Note:</strong>
+            `optional` parameter will always be present, but the array may be empty, or
+            it may contain all or some of the parameters listed below.
+          properties:
+            type:
+              description: Type of the transaction, where:<ul><li>'fee' - stands for any
+                institution's fee (e.g., card maintenance fee).</li><li>'transfer' - stands
+                for any transfer.</li><li>'normal' - this type is attributed to all transactions
+                we can't determine as fee and transfer.</li></ul>
+              type: string
+              enum:
+                - normal
+                - fee
+                - transfer
+            status:
+              description: The status of the transaction.
+              type: string
+              enum:
+                - booked
+                - pending
+                - future
+            additional_description:
+              description: Transaction's additional description.
+              type: string
+            cheque_number:
+              description: The number of the cheque.
+              type: string
+            internal_currency_convertion:
+              description: Whether the transaction amount was converted into a different
+                currency or not.
+              type: boolean
+            internal_currency_convertion_exchange_rate:
+              description: The exchange rate that was used for converting the transaction
+                amount.
+              type: number
+              format: float
+            source_amount:
+              description: The original transaction's amount.
+              type: number
+              format: float
+            source_currency_code:
+              description: The original currency of the transaction.
+              type: string
+            source_id:
+              description: Transaction identifier on the institution's end.
+              type: string
+            source_record_number:
+              description: Institution record number.
+              type: string
+            source_category:
+              description: The category of the transaction returned by the institution.
+              type: string
+            source_sub_category:
+              description: The subcategory of the transaction returned by the institution.
+              type: string
+            source_type:
+              description: Whether the transaction is a credit or a debit entry.
+              type: string
+              enum:
+                - credit
+                - debit
+            source_time:
+              description: Time when the transaction was made.
+              type: string
+              format: time
+            posting_date:
+              description: Date when the transaction is officially recorded and processed
+                by the institution.
+              type: string
+              format: date
+            posting_time:
+              description: Time when the transaction is officially recorded and processed
+                by the institution.
+              type: string
+              format: time
+            end_to_end_id:
+              description: A unique identifier set by the merchant. Usually used for reconciliation.
+              type: string
+            mcc:
+              description: Transaction's MCC (Merchant Category Code).
+              type: string
+            closing_balance:
+              description: The balance of the account after the transaction was imported.
+              type: number
+              format: float
+            opening_balance:
+              description: The balance of the account before the transaction was imported.
+              type: number
+              format: float
+            payee:
+              description: Payee IBAN/account number.
+              type: string
+            payee_information:
+              description: Additional information about the payee.
+              type: string
+            payer:
+              description: Payer IBAN/account number.
+              type: string
+            payer_information:
+              description: Additional information about the payer.
+              type: string
+            tags:
+              description: User-defined information that is assigned to a transaction record in the bank or e-wallet interface.
+              type: array
+              items:
+                type: string
+        enrichment_status:
+          type: string
+          enum:
+            - not-enriched
+            - pending
+            - failed
+            - enriched
+          nullable: false
+        category_name:
+          description: When available, provides category name based on the data enrichment model
+          type: string
+          nullable: true
+        sub_category_name:
+          description: Sub-category name based on the data enrichment model
+          type: string
+          nullable: true
+        merchant_name:
+          description: Merchant name based on the data enrichment model
+          type: string
+          nullable: true
+        merchant_logo:
+          description: Merchant logo based on the data enrichment model
+          type: string
+          nullable: true
+        created_at:
+          description: The timestamp when the transaction was fetched for the first time, in RFC 3339 format.
+          type: string
+          format: date-time
+          externalDocs:
+            description: RFC 3339 format
+            url: https://www.rfc-editor.org/rfc/rfc3339
+          example: '2020-01-26T02:25:34.569+00:00'
+          nullable: false
+        updated_at:
+          description: The timestamp when the transaction was last updated, in RFC 3339 format.
+          type: string
+          format: date-time
+          externalDocs:
+            description: RFC 3339 format
+            url: https://www.rfc-editor.org/rfc/rfc3339
+          example: '2020-01-26T02:25:34.569+00:00'
+          nullable: false
+    HelpDeskRequest:
+      type: object
+      properties:
+        subject:
+          type: string
+          maxLength: 200
+          minLength: 1
+          example: Problem with account.
+        message:
+          type: string
+          maxLength: 1000
+          minLength: 1
+          example: Cant open page.
+        type:
+          type: string
+          enum:
+            - Business Inquiry
+            - Support Inquiry
+            - Connection Issue
+            - Other Inquiry
+          example: Business Inquiry
+    CursorPaginator:
+      type: object
+      properties:
+        per_page:
+          description: The maximum number of items that can be returned per page.
+          type: integer
+          maximum: 50
+          minimum: 1
+          nullable: false
+        next_cursor:
+          description: Could be used to retrieve the next page.
+          type: string
+          nullable: true
+        prev_cursor:
+          description: Could be used to retrieve the previous page.
+          type: string
+          nullable: true
+    Error:
+      type: object
+      required:
+        - id
+        - code
+        - message
+      properties:
+        id:
+          title: Error ID
+          description: Unique identifier for the error
+          type: string
+          format: uuid
+        code:
+          title: Error Code
+          description: Error code is to identify the type of error.
+          type: integer
+        message:
+          title: Error Message
+          description: Friendly error message to show to the user
+          type: string
+        detail:
+          title: Error Detail
+          description: Detailed technical error description used by system
+            admins and developers
+          type: string
+
+  requestBodies:
+    CreateUserRequest:
+      description: User creation details
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CreateNewUser'
+    KYCRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/KYCRequest'
+    CreateAisConnectionRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CreateAisConnection'
+    CreateHelpDeskTicketRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            '$ref': '#/components/schemas/HelpDeskRequest'
+
+  responses:
+    UserResponse:
+      description: User created successfully
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserCreationResponse'
+    UserDetails:
+      description: Current user short details.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserDetails'
+    KYCStatus:
+      description: KYB status retrieved successfully
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/KYCStatus'
+    AisConnectionResponse:
+      description: Connection created successfully
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NewAisConnectionResponse'
+    AisConnectionsResponse:
+      description: List of the user's created connections (accounts)
+      content:
+        application/json:
+          schema:
+            allOf:
+              - type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/AisConnections'
+              - $ref: '#/components/schemas/CursorPaginator'
+    AccountsResponse:
+      description: OK
+      content:
+        application/json:
+          schema:
+            allOf:
+              - type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Account'
+              - $ref: '#/components/schemas/CursorPaginator'
+    AccountDetailsResponse:
+      description: Account details retrieved successfully
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Account'
+    AccountBalancesResponse:
+      description: OK
+      content:
+        application/json:
+          schema:
+            allOf:
+              - type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/AccountBalance'
+              - $ref: '#/components/schemas/CursorPaginator'
+    TransactionsResponse:
+      description: OK
+      content:
+        application/json:
+          schema:
+            allOf:
+              - type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Transaction'
+              - $ref: '#/components/schemas/CursorPaginator'
+    NoContent:
+      description: Operation successfully executed.
+    BadRequest:
+      description: The request is invalid and valid data need to be supplied.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized access to the resource.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Not enough permissions to access the resource.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The specified resource was not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Conflict:
+      description: Conflict! Entity already exists
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Validation:
+      description: Request didn't pass validation.
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/Error'
+              - type: object
+                required:
+                  - errors
+                properties:
+                  errors:
+                    description: Validation errors
+                    type: object
+                    minItems: 1
+                    uniqueItems: true
+                    additionalProperties:
+                      description: Array of error messages for property.
+                      type: array
+                      minItems: 1
+                      uniqueItems: true
+                      items:
+                        type: string
+    InternalServer:
+      description: An unknown error happened!
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  #TODO: To be checked
+  x-tyk-api-gateway:
+    active: true
+    enable_jwt: true
+    info:
+      name: BFM APIs
+      id: 6fd3776e85ac4f32ae5e5e107d400874
+      state:
+        active: true
+    upstream:
+      url: http://bfm-api.bfm.svc.cluster.local:3000/api/v1
+    server:
+      customDomain:
+        enabled: true
+        name: bfm.thefinxdev.io
+      listenPath:
+        value: '/api/v1'
+        strip: true
+      authentication:
+        enabled: false
+        oidc:
+          enabled: true
+          providers:
+            - issuer: https://keycloak.thefinxdev.io/realms/bfm
+              clientToPolicyMapping:
+                - clientId: NDMzN2Q1YjctMDAwMC00MWY2LWFmZGMtZTRiMWM3MWFhZTZi
+                  policyId: BFM-API
+          scopes:
+            claimName: scope
+          header:
+            enabled: true
+            name: Authorization

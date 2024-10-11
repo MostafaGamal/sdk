@@ -16,6 +16,7 @@ import (
 	"net/url"
 )
 
+// AccessToken - Endpoint related to access token generation
 type AccessToken struct {
 	sdkConfiguration sdkConfiguration
 }
@@ -26,9 +27,9 @@ func newAccessToken(sdkConfig sdkConfiguration) *AccessToken {
 	}
 }
 
-// Create - Get an Access Token
+// GetAccessToken - Get an Access Token
 // Get an access token from auth server to authenticate your requests to FINX PFM APIs.
-func (s *AccessToken) Create(ctx context.Context, request *operations.GetAccessTokenRequestBody, opts ...operations.Option) (*operations.GetAccessTokenResponse, error) {
+func (s *AccessToken) GetAccessToken(ctx context.Context, request *operations.GetAccessTokenRequestBody, opts ...operations.Option) (*operations.GetAccessTokenResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "get_access_token",

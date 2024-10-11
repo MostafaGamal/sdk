@@ -7,9 +7,9 @@ Endpoints related to user management
 
 ### Available Operations
 
-* [Get](#get) - Endpoint to provides details about current logged in user
+* [GetUserInfo](#getuserinfo) - Endpoint to provides details about current logged in user
 
-## Get
+## GetUserInfo
 
 Provides details about current logged in user
 
@@ -30,7 +30,7 @@ func main() {
     )
 
     ctx := context.Background()
-    res, err := s.Users.Get(ctx)
+    res, err := s.Users.GetUserInfo(ctx)
     if err != nil {
         log.Fatal(err)
     }

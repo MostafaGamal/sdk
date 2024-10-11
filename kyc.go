@@ -16,6 +16,7 @@ import (
 	"net/url"
 )
 
+// Kyc - Endpoints for Know Your Customer (KYC) verification
 type Kyc struct {
 	sdkConfiguration sdkConfiguration
 }
@@ -26,9 +27,9 @@ func newKyc(sdkConfig sdkConfiguration) *Kyc {
 	}
 }
 
-// Submit KYC information
+// SubmitKyc - Submit KYC information
 // Submit customer information for KYC (Know Your Customer) verification.
-func (s *Kyc) Submit(ctx context.Context, request components.KYCRequest, opts ...operations.Option) (*operations.SubmitKycResponse, error) {
+func (s *Kyc) SubmitKyc(ctx context.Context, request components.KYCRequest, opts ...operations.Option) (*operations.SubmitKycResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "submit_kyc",
@@ -244,9 +245,9 @@ func (s *Kyc) Submit(ctx context.Context, request components.KYCRequest, opts ..
 
 }
 
-// GetStatus - Get KYC verification status
+// GetKycStatus - Get KYC verification status
 // Retrieve the status of KYC (Know Your Customer) verification.
-func (s *Kyc) GetStatus(ctx context.Context, opts ...operations.Option) (*operations.GetKycStatusResponse, error) {
+func (s *Kyc) GetKycStatus(ctx context.Context, opts ...operations.Option) (*operations.GetKycStatusResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "get_kyc_status",

@@ -1,7 +1,9 @@
 configVersion: 2.0.0
 generation:
-  baseServerUrl: https://pfm.thefinx.io/api/v1
-  sdkClassName: PFM
+  devContainers:
+    enabled: true
+    schemaPath: 'https://raw.githubusercontent.com/MostafaGamal/sdk/master/pfm-apis.yaml'
+  sdkClassName: Pfm
   maintainOpenAPIOrder: true
   usageSnippets:
     optionalPropertyRendering: withExample
@@ -13,10 +15,11 @@ generation:
   auth:
     oAuth2ClientCredentialsEnabled: true
 go:
-  version: 0.0.3
+  version: 0.0.1
   additionalDependencies: {}
   allowUnknownFieldsInWeakUnions: false
   clientServerStatusCodesAsErrors: true
+  envVarPrefix: PFM
   flattenGlobalSecurity: true
   imports:
     option: openapi
@@ -27,8 +30,8 @@ go:
       shared: models/components
       webhooks: models/webhooks
   inputModelSuffix: input
-  maxMethodParams: 3
+  maxMethodParams: 4
   methodArguments: require-security-and-request
   outputModelSuffix: output
-  packageName: pfm
+  packageName: github.com/MostafaGamal/sdk
   responseFormat: envelope-http

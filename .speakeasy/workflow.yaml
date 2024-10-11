@@ -1,12 +1,12 @@
 workflowVersion: 1.0.0
 speakeasyVersion: latest
 sources:
-    local:
+    pfm-OAS:
         inputs:
-            - location: '../../pfm-api/pfmapis/pfm-apis.yaml '
+            - location: 'https://raw.githubusercontent.com/MostafaGamal/sdk/master/pfm-apis.yaml '
         registry:
-            location: registry.speakeasyapi.dev/fintech-galaxy/fintech-galaxy/local
+            location: registry.speakeasyapi.dev/fintech-galaxy/fintech-galaxy/pfm-oas
 targets:
-    PFM-SDK:
+    pfm:
         target: go
-        source: local
+        source: pfm-OAS

@@ -1,7 +1,7 @@
 speakeasyVersion: 1.417.1
 sources:
     sdk -OAS:
-        sourceNamespace: sdk--oas
+        sourceNamespace: pfm--oas
         sourceRevisionDigest: sha256:5965ad2824b8cbeebb6e9e344889d570c885f29be8486027abc2ff3ddfe540c0
         sourceBlobDigest: sha256:4119cd37997e0c8f1fd26d3e7621f539bdf08ce486cbad3fde6f62d98f932d2c
         tags:
@@ -9,7 +9,7 @@ sources:
 targets:
     sdk:
         source: sdk -OAS
-        sourceNamespace: sdk--oas
+        sourceNamespace: pfm--oas
         sourceRevisionDigest: sha256:5965ad2824b8cbeebb6e9e344889d570c885f29be8486027abc2ff3ddfe540c0
         sourceBlobDigest: sha256:4119cd37997e0c8f1fd26d3e7621f539bdf08ce486cbad3fde6f62d98f932d2c
 workflow:
@@ -19,7 +19,7 @@ workflow:
             inputs:
                 - location: ..\pfm-apis.yaml
             registry:
-                location: registry.speakeasyapi.dev/fintech-galaxy/fintech-galaxy/sdk--oas
+                location: registry.speakeasyapi.dev/fintech-galaxy/fintech-galaxy/pfm--oas
     targets:
         sdk:
             target: go

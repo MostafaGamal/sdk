@@ -5,7 +5,7 @@ sources:
             - location: https://raw.githubusercontent.com/MostafaGamal/sdk/refs/heads/master/pfm-apis.yaml
         output: '  '
         registry:
-            location: registry.speakeasyapi.dev/fintech-galaxy/fintech-galaxy/sdk--oas
+            location: registry.speakeasyapi.dev/fintech-galaxy/fintech-galaxy/pfm--oas
 targets:
     sdk:
         target: go

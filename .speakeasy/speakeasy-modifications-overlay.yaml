@@ -1,0 +1,129 @@
+overlay: 1.0.0
+info:
+  title: Speakeasy Modifications
+  version: 0.0.2
+  x-speakeasy-metadata:
+    after: ""
+    before: ""
+    type: speakeasy-modifications
+actions:
+  - target: $["paths"]["/realms/pfm/protocol/openid-connect/token"]["post"]
+    update:
+      x-speakeasy-group: accessToken
+      x-speakeasy-name-override: create
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.Access Token.get_access_token()
+      after: sdk.accessToken.create()
+      reviewed_at: 1728663267076
+      created_at: 1728663178805
+  - target: $["paths"]["/me"]["get"]
+    update:
+      x-speakeasy-name-override: get
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.Users.get_user_info()
+      after: sdk.users.get()
+      reviewed_at: 1728663267076
+      created_at: 1728663178805
+  - target: $["paths"]["/ais/users/connections/accounts/transactions"]["get"]
+    update:
+      x-speakeasy-name-override: list
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.Transactions.get_transactions()
+      after: sdk.transactions.list()
+      reviewed_at: 1728663267076
+      created_at: 1728663178805
+  - target: $["paths"]["/ais/users/connections/{connection_id}/accounts/{account_id}/balances"]["get"]
+    update:
+      x-speakeasy-name-override: getBalances
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.Accounts.get_user_account_balances()
+      after: sdk.accounts.getBalances()
+      reviewed_at: 1728663267076
+      created_at: 1728663178805
+  - target: $["paths"]["/helpdesk"]["post"]
+    update:
+      x-speakeasy-name-override: createInquiry
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.Helpdesk.create_inquiry()
+      after: sdk.helpdesk.createInquiry()
+      reviewed_at: 1728663267076
+      created_at: 1728663178805
+  - target: $["paths"]["/kyc"]["post"]
+    update:
+      x-speakeasy-group: kyc
+      x-speakeasy-name-override: submit
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.KYC.submit_kyc()
+      after: sdk.kyc.submit()
+      reviewed_at: 1728663267076
+      created_at: 1728663178805
+  - target: $["paths"]["/ais/users/connections/{connection_id}/accounts/{account_id}/transactions"]["get"]
+    update:
+      x-speakeasy-name-override: list_for_account
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.Transactions.get_account_transactions()
+      after: sdk.transactions.list_for_account()
+      reviewed_at: 1728663267076
+      created_at: 1728663178805
+  - target: $["paths"]["/ais/users/connections/{connection_id}/accounts/{account_id}"]["get"]
+    update:
+      x-speakeasy-name-override: getById
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.Accounts.get_user_account_by_id()
+      after: sdk.accounts.getById()
+      reviewed_at: 1728663267076
+      created_at: 1728663178805
+  - target: $["paths"]["/ais/users/connections/{connection_id}"]["delete"]
+    update:
+      x-speakeasy-name-override: delete
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.Connections.delete_ais_connection()
+      after: sdk.connections.delete()
+      reviewed_at: 1728663267076
+      created_at: 1728663178805
+  - target: $["paths"]["/ais/users/connections/{connection_id}/accounts"]["get"]
+    update:
+      x-speakeasy-name-override: list
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.Accounts.get_user_accounts()
+      after: sdk.accounts.list()
+      reviewed_at: 1728663267076
+      created_at: 1728663178805
+  - target: $["paths"]["/kyc"]["get"]
+    update:
+      x-speakeasy-group: kyc
+      x-speakeasy-name-override: getStatus
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.KYC.get_kyc_status()
+      after: sdk.kyc.getStatus()
+      reviewed_at: 1728663267076
+      created_at: 1728663178805
+  - target: $["paths"]["/ais/users/connections"]["post"]
+    update:
+      x-speakeasy-name-override: create
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.Connections.create_ais_connection()
+      after: sdk.connections.create()
+      reviewed_at: 1728663267076
+      created_at: 1728663178805
+  - target: $["paths"]["/ais/users/connections"]["get"]
+    update:
+      x-speakeasy-name-override: list
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.Connections.get_user_connections()
+      after: sdk.connections.list()
+      reviewed_at: 1728663267076
+      created_at: 1728663178805

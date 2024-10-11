@@ -1,0 +1,11 @@
+# NewAisConnectionResponse
+
+Connection created successfully
+
+
+## Fields
+
+| Field                                                                                                         | Type                                                                                                          | Required                                                                                                      | Description                                                                                                   | Example                                                                                                       |
+| ------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| `AuthSessionURL`                                                                                              | **string*                                                                                                     | :heavy_minus_sign:                                                                                            | `auth_session_url` to be used to access FINX Connect Widget for connection creation.                          | https://www.fintech-galaxy.com/                                                                               |
+| `ExpiresAt`                                                                                                   | [*time.Time](https://pkg.go.dev/time#Time)                                                                    | :heavy_minus_sign:                                                                                            | The date and time when `auth_session_url` expires.<br/><br/>[RFC 3339 format](https://www.rfc-editor.org/rfc/rfc3339) | 2020-01-26T02:25:34.569+00:00                                                                                 |

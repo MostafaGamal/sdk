@@ -1,0 +1,293 @@
+lockVersion: 2.0.0
+id: 0279d87c-42eb-43d2-ab89-50b9d91c0764
+management:
+  docChecksum: 295fc49d62d8a6e781fb15618f26669d
+  docVersion: 0.0.0.1
+  speakeasyVersion: 1.417.1
+  generationVersion: 2.438.2
+  releaseVersion: 0.1.0
+  configChecksum: 7b267de52860e9755ad5c28b586ef485
+features:
+  go:
+    additionalDependencies: 0.1.0
+    constsAndDefaults: 0.1.6
+    core: 3.5.13
+    defaultEnabledRetries: 0.2.0
+    devContainers: 2.90.0
+    envVarSecurityUsage: 0.3.1
+    flattening: 2.81.1
+    globalSecurity: 2.82.10
+    globalSecurityCallbacks: 0.1.0
+    globalSecurityFlattening: 0.1.0
+    globalServerURLs: 2.82.2
+    groups: 2.81.2
+    intellisenseMarkdownSupport: 0.1.0
+    methodServerURLs: 2.82.1
+    nameOverrides: 2.81.2
+    nullables: 0.1.0
+    responseFormat: 0.1.2
+    retries: 2.83.0
+    sdkHooks: 0.1.0
+generatedFiles:
+  - .devcontainer/README.md
+  - .devcontainer/devcontainer.json
+  - .devcontainer/setup.sh
+  - .gitattributes
+  - /models/components/account.go
+  - /models/components/accountbalance.go
+  - /models/components/accountbalancesresponse.go
+  - /models/components/accountsresponse.go
+  - /models/components/aisconnections.go
+  - /models/components/aisconnectionsresponse.go
+  - /models/components/createaisconnection.go
+  - /models/components/helpdeskrequest.go
+  - /models/components/httpmetadata.go
+  - /models/components/kycrequest.go
+  - /models/components/kycstatus.go
+  - /models/components/newaisconnectionresponse.go
+  - /models/components/security.go
+  - /models/components/transaction.go
+  - /models/components/transactionsresponse.go
+  - /models/components/userdetails.go
+  - /models/operations/createaisconnection.go
+  - /models/operations/createinquiry.go
+  - /models/operations/deleteaisconnection.go
+  - /models/operations/getaccesstoken.go
+  - /models/operations/getaccounttransactions.go
+  - /models/operations/getkycstatus.go
+  - /models/operations/gettransactions.go
+  - /models/operations/getuseraccountbalances.go
+  - /models/operations/getuseraccountbyid.go
+  - /models/operations/getuseraccounts.go
+  - /models/operations/getuserconnections.go
+  - /models/operations/getuserinfo.go
+  - /models/operations/submitkyc.go
+  - /models/sdkerrors/error.go
+  - /models/sdkerrors/validation.go
+  - CONTRIBUTING.md
+  - USAGE.md
+  - accesstoken.go
+  - accounts.go
+  - connections.go
+  - docs/models/components/account.md
+  - docs/models/components/accountbalance.md
+  - docs/models/components/accountbalanceoptional.md
+  - docs/models/components/accountbalancesresponse.md
+  - docs/models/components/accountsresponse.md
+  - docs/models/components/accountstatus.md
+  - docs/models/components/accounttype.md
+  - docs/models/components/aisconnections.md
+  - docs/models/components/aisconnectionsresponse.md
+  - docs/models/components/businesstype.md
+  - docs/models/components/cardtype.md
+  - docs/models/components/consentdetails.md
+  - docs/models/components/contactperson.md
+  - docs/models/components/createaisconnection.md
+  - docs/models/components/enrichmentstatus.md
+  - docs/models/components/helpdeskrequest.md
+  - docs/models/components/httpmetadata.md
+  - docs/models/components/kycrequest.md
+  - docs/models/components/kycstatus.md
+  - docs/models/components/language.md
+  - docs/models/components/newaisconnectionresponse.md
+  - docs/models/components/optional.md
+  - docs/models/components/scopes.md
+  - docs/models/components/security.md
+  - docs/models/components/sourcetype.md
+  - docs/models/components/status.md
+  - docs/models/components/transaction.md
+  - docs/models/components/transactionoptional.md
+  - docs/models/components/transactionsresponse.md
+  - docs/models/components/transactionstatus.md
+  - docs/models/components/transactiontype.md
+  - docs/models/components/type.md
+  - docs/models/components/usecase.md
+  - docs/models/components/userdetails.md
+  - docs/models/operations/createaisconnectionresponse.md
+  - docs/models/operations/createinquiryresponse.md
+  - docs/models/operations/deleteaisconnectionrequest.md
+  - docs/models/operations/deleteaisconnectionresponse.md
+  - docs/models/operations/getaccesstokenrequestbody.md
+  - docs/models/operations/getaccesstokenresponse.md
+  - docs/models/operations/getaccesstokenresponsebody.md
+  - docs/models/operations/getaccounttransactionsrequest.md
+  - docs/models/operations/getaccounttransactionsresponse.md
+  - docs/models/operations/getkycstatusresponse.md
+  - docs/models/operations/gettransactionsrequest.md
+  - docs/models/operations/gettransactionsresponse.md
+  - docs/models/operations/getuseraccountbalancesrequest.md
+  - docs/models/operations/getuseraccountbalancesresponse.md
+  - docs/models/operations/getuseraccountbyidrequest.md
+  - docs/models/operations/getuseraccountbyidresponse.md
+  - docs/models/operations/getuseraccountsrequest.md
+  - docs/models/operations/getuseraccountsresponse.md
+  - docs/models/operations/getuserconnectionsrequest.md
+  - docs/models/operations/getuserconnectionsresponse.md
+  - docs/models/operations/getuserinforesponse.md
+  - docs/models/operations/option.md
+  - docs/models/operations/submitkycresponse.md
+  - docs/models/sdkerrors/error.md
+  - docs/models/sdkerrors/validation.md
+  - docs/sdks/accesstoken/README.md
+  - docs/sdks/accounts/README.md
+  - docs/sdks/connections/README.md
+  - docs/sdks/helpdesk/README.md
+  - docs/sdks/kyc/README.md
+  - docs/sdks/pfm/README.md
+  - docs/sdks/transactions/README.md
+  - docs/sdks/users/README.md
+  - docs/types/date.md
+  - go.mod
+  - helpdesk.go
+  - internal/hooks/hooks.go
+  - internal/utils/contenttype.go
+  - internal/utils/form.go
+  - internal/utils/headers.go
+  - internal/utils/json.go
+  - internal/utils/pathparams.go
+  - internal/utils/queryparams.go
+  - internal/utils/requestbody.go
+  - internal/utils/retries.go
+  - internal/utils/security.go
+  - internal/utils/utils.go
+  - kyc.go
+  - models/operations/options.go
+  - models/sdkerrors/sdkerror.go
+  - pfm.go
+  - retry/config.go
+  - transactions.go
+  - types/bigint.go
+  - types/date.go
+  - types/datetime.go
+  - types/decimal.go
+  - types/pointers.go
+  - users.go
+examples:
+  get_access_token:
+    speakeasy-default-get-access-token:
+      requestBody:
+        application/x-www-form-urlencoded: {"client_id": "demo", "code": "42a7913c-62b4-40cc-a1aa-66286c56a7d5.9dacc7ad-6ca9-4f1b-badb-bbb55ec67323.b913eb22-9a40-464f-bc5a-0c17589214c2", "redirect_uri": "https://localhost:8080", "code_verifier": "ZefY3-yNqKev8BbgtuudLnGRInI70uSt3-s5rr7x5Cc"}
+      responses:
+        "201":
+          application/json: {"access_token": "eyJhbGciOiJIUzI1.SflKxwRJSMeKKF2QT4fwpMeJf36P.Ok6yJV_adQssw5c", "scope": "ais", "expires_in": 86400, "token_type": "Bearer"}
+  get_user_info:
+    speakeasy-default-get-user-info:
+      responses:
+        "200":
+          application/json: {"id": 1, "email": "john.doe@company.com", "name": "<value>", "is_admin": false}
+        "401":
+          application/json: {"id": "e9c0a754-3958-4d39-86c4-b6d4cbf5ed7d", "code": 555075, "message": "<value>"}
+  submit_kyc:
+    speakeasy-default-submit-kyc:
+      requestBody:
+        application/json: {"contactPerson": {"email": "john.doe@company.com"}}
+      responses:
+        "400":
+          application/json: {"id": "e64859cd-bd98-4215-bf7c-f4b0ec669ad9", "code": 548924, "message": "<value>"}
+        "422":
+          application/json: {"id": "6bcf175f-7c95-4b91-b319-cda658c39727", "code": 157134, "message": "<value>", "errors": {"key": ["<value>"]}}
+  get_kyc_status:
+    speakeasy-default-get-kyc-status:
+      responses:
+        "401":
+          application/json: {"id": "12152f7c-3a2d-41f5-9d83-f971bfa3aa3d", "code": 610826, "message": "<value>"}
+        "200": {}
+  get_user_connections:
+    speakeasy-default-get-user-connections:
+      responses:
+        "200":
+          application/json: {"data": [{"id": 1, "last_ais_consent_id": 1, "bank_id": 1, "created_at": "2020-01-26T02:25:34.569+00:00", "updated_at": "2020-01-26T02:25:34.569+00:00"}, {"id": 1, "last_ais_consent_id": 1, "bank_id": 1, "created_at": "2020-01-26T02:25:34.569+00:00", "updated_at": "2020-01-26T02:25:34.569+00:00"}]}
+        "400":
+          application/json: {"id": "c16e89e1-a0f0-4850-814f-db1680b3102a", "code": 320623, "message": "<value>"}
+  create_ais_connection:
+    speakeasy-default-create-ais-connection:
+      requestBody:
+        application/json: {"consentDetails": {"fetch_start_date": "2020-01-26", "expires_at": "2024-01-26T02:25:34.569+00:00", "scopes": ["standing_orders"]}}
+      responses:
+        "201":
+          application/json: {"auth_session_url": "https://www.fintech-galaxy.com/", "expires_at": "2020-01-26T02:25:34.569+00:00"}
+        "400":
+          application/json: {"id": "d53dcb4f-c53e-49d0-a4dc-c087da20bd95", "code": 799174, "message": "<value>"}
+        "422":
+          application/json: {"id": "b523a713-1cdb-4810-ba0f-cf745db205b1", "code": 408211, "message": "<value>", "errors": {"key": []}}
+  delete_ais_connection:
+    "":
+      parameters:
+        path:
+          connection_id: 1
+      responses:
+        "401":
+          application/json: {"id": "881bbda4-ce9c-4cb0-8702-fe5a25e25d77", "code": 591755, "message": "<value>"}
+        "422":
+          application/json: {"id": "27c41ace-1d14-4ac4-9362-edbacfcc4b5f", "code": 992967, "message": "<value>", "errors": {"key": ["<value>", "<value>"], "key1": ["<value>", "<value>", "<value>"]}}
+  get_user_accounts:
+    "":
+      parameters:
+        path:
+          connection_id: 1
+      responses:
+        "200":
+          application/json: {"data": [{"id": 1, "connection_id": 1, "currency_code": "AED", "created_at": "2020-01-26T02:25:34.569+00:00", "updated_at": "2020-01-26T02:25:34.569+00:00"}, {"id": 1, "connection_id": 1, "currency_code": "AED", "created_at": "2020-01-26T02:25:34.569+00:00", "updated_at": "2020-01-26T02:25:34.569+00:00"}, {"id": 1, "connection_id": 1, "currency_code": "AED", "created_at": "2020-01-26T02:25:34.569+00:00", "updated_at": "2020-01-26T02:25:34.569+00:00"}]}
+        "401":
+          application/json: {"id": "f8861706-7afc-4a25-88d7-39c8263be28d", "code": 780330, "message": "<value>"}
+        "422":
+          application/json: {"id": "f27fb641-5dd9-4f38-893f-2b9c8b328f72", "code": 876759, "message": "<value>", "errors": {"key": ["<value>", "<value>"]}}
+  get_user_account_by_id:
+    "":
+      parameters:
+        path:
+          account_id: 1
+          connection_id: 1
+      responses:
+        "200":
+          application/json: {"id": 1, "connection_id": 1, "currency_code": "AED", "created_at": "2020-01-26T02:25:34.569+00:00", "updated_at": "2020-01-26T02:25:34.569+00:00"}
+        "401":
+          application/json: {"id": "b8b7c2e5-b33d-444c-b927-da2d3f94fe01", "code": 48163, "message": "<value>"}
+        "422":
+          application/json: {"id": "4550aaee-1a5c-4aa4-a05f-9b83fc8044db", "code": 313147, "message": "<value>", "errors": {"key": []}}
+  get_user_account_balances:
+    "":
+      parameters:
+        path:
+          connection_id: 1
+          account_id: 1
+        query: {}
+      responses:
+        "200":
+          application/json: {"data": [{"account_id": 1, "connection_id": 1, "currency_code": "AED"}]}
+        "401":
+          application/json: {"id": "0c21e3a0-422b-446b-95d2-820ba8809258", "code": 934746, "message": "<value>"}
+        "422":
+          application/json: {"id": "f479b2fc-1c47-455b-b4c2-10950437a435", "code": 257916, "message": "<value>", "errors": {}}
+  get_account_transactions:
+    "":
+      parameters:
+        path:
+          connection_id: 1
+          account_id: 1
+        query: {}
+      responses:
+        "200":
+          application/json: {"data": [{"id": 1, "connection_id": 1, "account_id": 1, "attempt_id": 1, "created_at": "2020-01-26T02:25:34.569+00:00", "updated_at": "2020-01-26T02:25:34.569+00:00"}, {"id": 1, "connection_id": 1, "account_id": 1, "attempt_id": 1, "created_at": "2020-01-26T02:25:34.569+00:00", "updated_at": "2020-01-26T02:25:34.569+00:00"}]}
+        "401":
+          application/json: {"id": "ec54b50e-2590-4626-a598-143cb113c452", "code": 862631, "message": "<value>"}
+        "422":
+          application/json: {"id": "e63be17f-2a2f-474c-ab5c-592219f7c56f", "code": 63988, "message": "<value>", "errors": {"key": ["<value>", "<value>", "<value>"]}}
+  get_transactions:
+    speakeasy-default-get-transactions:
+      responses:
+        "200":
+          application/json: {"data": [{"id": 1, "connection_id": 1, "account_id": 1, "attempt_id": 1, "created_at": "2020-01-26T02:25:34.569+00:00", "updated_at": "2020-01-26T02:25:34.569+00:00"}]}
+        "401":
+          application/json: {"id": "cc02d7b0-aea6-4a4d-a96d-2d95189e2bd2", "code": 684217, "message": "<value>"}
+        "422":
+          application/json: {"id": "9d34d1ec-5489-4ffb-9aa5-4727dc30bc56", "code": 151329, "message": "<value>", "errors": {}}
+  create_inquiry:
+    speakeasy-default-create-inquiry:
+      requestBody:
+        application/json: {"subject": "Problem with account.", "message": "Cant open page.", "type": "Business Inquiry"}
+      responses:
+        "401":
+          application/json: {"id": "41b061fb-0161-49c3-93bb-551e63633a7e", "code": 264642, "message": "<value>"}
+        "422":
+          application/json: {"id": "6341ae85-879b-45b0-8c1b-ad3018237140", "code": 702449, "message": "<value>", "errors": {}}

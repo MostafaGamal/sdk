@@ -1,0 +1,12 @@
+workflowVersion: 1.0.0
+speakeasyVersion: latest
+sources:
+    local:
+        inputs:
+            - location: '../../pfm-api/pfmapis/pfm-apis.yaml '
+        registry:
+            location: registry.speakeasyapi.dev/fintech-galaxy/fintech-galaxy/local
+targets:
+    PFM-SDK:
+        target: go
+        source: local

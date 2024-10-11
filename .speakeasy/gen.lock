@@ -7,8 +7,8 @@ management:
   generationVersion: 2.438.2
   releaseVersion: 0.0.3
   configChecksum: 9973f9a5ee53921108a5a34c0c4706f7
-  repoURL: https://gitlab.com/ftg2021/finx-xfm
-  repoSubDirectory: go-sdk
+  repoURL: https://github.com/MostafaGamal
+  repoSubDirectory: sdk
 features:
   go:
     additionalDependencies: 0.1.0
